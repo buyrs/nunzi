@@ -44,12 +44,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/OpenHands/OpenHands.git",
+    "url": "https://github.com/buyrs/nunzi.git",
     "directory": "openhands-ui"
   },
-  "homepage": "https://www.all-hands.dev/",
+  "homepage": "https://github.com/buyrs/nunzi",
   "bugs": {
-    "url": "https://github.com/OpenHands/OpenHands/issues"
+    "url": "https://github.com/buyrs/nunzi/issues"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.0",

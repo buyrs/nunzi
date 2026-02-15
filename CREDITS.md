@@ -2,7 +2,7 @@
 
 ## Contributors
 
-We would like to thank all the [contributors](https://github.com/OpenHands/OpenHands/graphs/contributors) who have
+We would like to thank all the [contributors](https://github.com/buyrs/nunzi/graphs/contributors) who have
 helped make OpenHands possible. We greatly appreciate your dedication and hard work.
 
 ## Open Source Projects
@@ -16,7 +16,7 @@ open source community:
 
 #### [Aider](https://github.com/paul-gauthier/aider)
    - License: Apache License 2.0
-   - Description: AI pair programming tool. OpenHands has adapted and integrated its linter module for code-related tasks in [`agentskills utilities`](https://github.com/OpenHands/OpenHands/tree/main/openhands/runtime/plugins/agent_skills/utils/aider)
+   - Description: AI pair programming tool. OpenHands has adapted and integrated its linter module for code-related tasks in [`agentskills utilities`](https://github.com/buyrs/nunzi/tree/main/openhands/runtime/plugins/agent_skills/utils/aider)
 
 #### [BrowserGym](https://github.com/ServiceNow/BrowserGym)
    - License: Apache License 2.0

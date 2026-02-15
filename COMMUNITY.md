@@ -1,6 +1,6 @@
-# The OpenHands Community
+# The Nunzi Community
 
-OpenHands is a community of engineers, academics, and enthusiasts reimagining software development for an AI-powered
+Nunzi is a community of engineers, academics, and enthusiasts reimagining software development for an AI-powered
 world.
 
 ## Mission
@@ -28,10 +28,10 @@ We welcome thoughtful criticism, whether it’s a comment on a PR or feedback on
 
 ### High Agency
 
-Everyone should feel empowered to contribute to OpenHands. Whether it’s by making a PR, hosting an event, sharing
+Everyone should feel empowered to contribute to Nunzi. Whether it’s by making a PR, hosting an event, sharing
 feedback, or just asking a question, don’t hold back!
 
-OpenHands gives everyone the building blocks to create state-of-the-art developer experiences. We experiment constantly
+Nunzi gives everyone the building blocks to create state-of-the-art developer experiences. We experiment constantly
 and love building new things.
 
 Coding, development practices, and communities are changing rapidly. We won’t hesitate to change direction and make big bets.

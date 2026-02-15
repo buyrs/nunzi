@@ -48,7 +48,7 @@ Once executed, OpenHands should be running locally and ready for use.
 ## Manual Initialization
 
 ### Step 1: Set the `OPENHANDS_VERSION` Environment Variable
-Run the following command in your terminal, replacing `<openhands-release>` with the latest release's version seen in the [main README.md file](https://github.com/OpenHands/OpenHands?tab=readme-ov-file#-quick-start):
+Run the following command in your terminal, replacing `<openhands-release>` with the latest release's version seen in the [main README.md file](https://github.com/buyrs/nunzi?tab=readme-ov-file#-quick-start):
 
 #### Mac/Linux:
 ```bash

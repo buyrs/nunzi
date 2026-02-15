@@ -210,7 +210,7 @@ python -m openhands.resolver.send_pull_request --issue-number ISSUE_NUMBER --use
 
 ## Providing Custom Instructions
 
-You can customize how the AI agent approaches issue resolution by adding a repository microagent file at `.openhands/microagents/repo.md` in your repository. This file's contents will be automatically loaded in the prompt when working with your repository. For more information about repository microagents, see [Repository Instructions](https://github.com/OpenHands/OpenHands/tree/main/microagents#2-repository-instructions-private).
+You can customize how the AI agent approaches issue resolution by adding a repository microagent file at `.openhands/microagents/repo.md` in your repository. This file's contents will be automatically loaded in the prompt when working with your repository. For more information about repository microagents, see [Repository Instructions](https://github.com/buyrs/nunzi/tree/main/microagents#2-repository-instructions-private).
 
 ## Troubleshooting
 

@@ -1,11 +1,11 @@
-This repository contains the code for OpenHands, an automated AI software engineer. It has a Python backend
+This repository contains the code for Nunzi, an automated AI software engineer. It has a Python backend
 (in the `openhands` directory) and React frontend (in the `frontend` directory).
 
 ## General Setup:
 To set up the entire repo, including frontend and backend, run `make build`.
 You don't need to do this unless the user asks you to, or if you're trying to run the entire application.
 
-## Running OpenHands with OpenHands:
+## Running Nunzi with OpenHands Core:
 To run the full application to debug issues:
 ```bash
 export INSTALL_DOCKER=0

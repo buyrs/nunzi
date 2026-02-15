@@ -8,7 +8,7 @@
 
 
 <div align="center">
-  <a href="https://github.com/OpenHands/OpenHands/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-20B2AA?style=for-the-badge" alt="MIT License"></a>
+  <a href="https://github.com/buyrs/nunzi/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-20B2AA?style=for-the-badge" alt="MIT License"></a>
   <a href="https://docs.google.com/spreadsheets/d/1wOUdFCMyY6Nt0AIqF705KN4JKOWgeI4wUGUP60krXXs/edit?gid=811504672#gid=811504672"><img src="https://img.shields.io/badge/SWEBench-77.6-00cc00?logoColor=FFE165&style=for-the-badge" alt="Benchmark Score"></a>
   <br/>
   <a href="https://docs.openhands.dev/sdk"><img src="https://img.shields.io/badge/Documentation-000?logo=googledocs&logoColor=FFE165&style=for-the-badge" alt="Check out the documentation"></a>
@@ -57,7 +57,7 @@ Define agents in code, then run them locally, or scale to 1000s of agents in the
 The CLI is the easiest way to start using OpenHands. The experience will be familiar to anyone who has worked
 with e.g. Claude Code or Codex. You can power it with Claude, GPT, or any other LLM.
 
-[Check out the docs](https://docs.openhands.dev/openhands/usage/run-openhands/cli-mode) or [view the source](https://github.com/OpenHands/OpenHands-CLI)
+[Check out the docs](https://docs.openhands.dev/openhands/usage/run-openhands/cli-mode) or [view the source](https://github.com/buyrs/nunzi-CLI)
 
 ### Nunzi Local GUI (formerly OpenHands GUI)
 Use the Local GUI for running agents on your laptop. It comes with a REST API and a single-page React application.
@@ -90,7 +90,7 @@ Learn more at [openhands.dev/enterprise](https://openhands.dev/enterprise)
 ### Everything Else
 
 Check out our [Product Roadmap](features.md), and feel free to
-[open up an issue](https://github.com/OpenHands/OpenHands/issues) if there's something you'd like to see!
+[open up an issue](https://github.com/buyrs/nunzi/issues) if there's something you'd like to see!
 
 You might also be interested in our [evaluation infrastructure](https://github.com/OpenHands/benchmarks), our [chrome extension](https://github.com/OpenHands/openhands-chrome-extension/), or our [Theory-of-Mind module](https://github.com/OpenHands/ToM-SWE).
 
