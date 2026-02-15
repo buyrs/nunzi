@@ -88,3 +88,70 @@ This document outlines visionary feature concepts designed to elevate Nunzi (bui
 4.  **Resolution:** Agents communicate in a shared channel ("Backend here, I see a foreign key error" -> "Frontend here, ah, I sent the wrong ID format") to pinpoint the root cause.
 
 **Value:** Mimics a real-world "War Room" debugging session, resolving complex full-stack issues significantly faster.
+
+---
+
+## 6. 📝 "Scribe" (Autonomous Documentation Sync)
+
+**The Problem:** Documentation (READMEs, API specs, architecture diagrams) is always outdated because developers prioritize code over docs.
+
+**The Feature:** An autonomous agent that watches repository activity.
+
+**Behavior:**
+*   **Trigger:** When a PR is merged, Scribe wakes up.
+*   **Analysis:** It analyzes code changes (e.g., "Added a new `/auth/login` endpoint").
+*   **Action:** It automatically updates `openapi.json` (Swagger), updates `README.md` usage examples, and redraws Mermaid diagrams.
+*   **Output:** It opens a PR: `docs: sync documentation with recent changes`.
+
+**Value:** Documentation is always live and accurate. Eliminates "documentation drift."
+
+---
+
+## 7. 🛡️ "Gatekeeper" (Semantic Code Review)
+
+**The Problem:** Junior devs (or tired seniors) push code that works but is messy, insecure, or violates team patterns.
+
+**The Feature:** An AI Reviewer that *learns* your team's style via Cortex.
+
+**Behavior:**
+*   **Trigger:** A PR is opened.
+*   **Review:** Gatekeeper comments on the PR *before* a human sees it.
+*   **Feedback:**
+    *   Style: "Hey, you used `print()` here, but we use `logger.info()` in this project."
+    *   Security: "This SQL query looks vulnerable to injection. Use a parameterized query."
+    *   Complexity: "This function is 50 lines long; consider breaking it up."
+
+**Value:** Saves senior dev time by catching trivial issues automatically and enforcing quality standards.
+
+---
+
+## 8. 🏗️ "Refactor" (The Tech Debt Collector)
+
+**The Problem:** "TODOs" in code are where ideas go to die. Dependencies get old and vulnerable.
+
+**The Feature:** A background agent that works during off-hours.
+
+**Behavior:**
+*   **Scan:** Refactor scans the codebase for `# TODO` comments and outdated dependencies.
+*   **Plan:** It identifies low-risk improvements (e.g., upgrading `requests` library).
+*   **Execute:** It creates a branch, implements the fix, runs tests in the Sandbox, and opens a PR.
+
+**Value:** The codebase *improves* passively over time instead of deteriorating.
+
+---
+
+## 9. 🎨 "PixelPerfect" (Figma-to-Code Integration)
+
+**The Problem:** Frontend developers waste hours translating Figma designs into CSS/Tailwind, often missing subtle spacing or typography details.
+
+**The Feature:** Deep integration with the Figma API.
+
+**Behavior:**
+*   **Input:** You provide a Figma File URL and a Frame ID (e.g., "Login Screen").
+*   **Processing:**
+    *   The agent uses the Figma API to extract the vector node graph (layout, colors, typography).
+    *   It retrieves assets (images/icons) directly.
+*   **Generation:** It generates pixel-perfect React/Tailwind components that match the design exactly.
+*   **Validation:** It takes a screenshot of the rendered component and compares it to the Figma original using visual diffing.
+
+**Value:** Reduces "pixel pushing" time by 90%. Ensures implementation matches design intent perfectly.
