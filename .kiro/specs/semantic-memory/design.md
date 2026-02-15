@@ -312,3 +312,168 @@ embedding_dimensions = 1536
 default_relevance_threshold = 0.3
 max_memory_context_tokens = 2000
 ```
+
+
+## Correctness Properties
+
+*A property is a characteristic or behavior that should hold true across all valid executions of a system — essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+
+The following properties were derived from the acceptance criteria in the requirements document. Each property is universally quantified and suitable for property-based testing.
+
+### Property 1: Store-retrieve round trip
+
+*For any* valid MemoryEntry with content, category, and metadata, storing it in the MemoryStore and then retrieving it by its ID should produce an equivalent MemoryEntry (same content, category, metadata, and ID).
+
+**Validates: Requirements 1.2**
+
+### Property 2: Duplicate ID rejection
+
+*For any* MemoryEntry already persisted in the MemoryStore, attempting to store another MemoryEntry with the same ID should raise an error, and the original entry should remain unchanged.
+
+**Validates: Requirements 1.3**
+
+### Property 3: Storage without embedding when provider unavailable
+
+*For any* MemoryEntry, if the EmbeddingProvider is unavailable (raises an error), the MemoryStore should still persist the entry with a null embedding field, and the entry should be retrievable by ID.
+
+**Validates: Requirements 1.4**
+
+### Property 4: Delete removes entry
+
+*For any* MemoryEntry stored in the MemoryStore, deleting it by ID and then attempting to retrieve it should raise a not-found error, and the entry should not appear in any subsequent list or search results.
+
+**Validates: Requirements 1.5**
+
+### Property 5: Embedding dimensionality invariant
+
+*For any* non-empty text string, the embedding vector returned by the EmbeddingProvider should have exactly the configured number of dimensions.
+
+**Validates: Requirements 2.1**
+
+### Property 6: Embedding determinism
+
+*For any* text string, calling the EmbeddingProvider embed method twice with the same text should produce identical embedding vectors.
+
+**Validates: Requirements 2.2**
+
+### Property 7: Embedding error propagation
+
+*For any* simulated service error in the EmbeddingProvider, the provider should raise an exception whose message contains a description of the failure reason.
+
+**Validates: Requirements 2.4**
+
+### Property 8: Search results ordered by descending score
+
+*For any* set of MemoryEntry records stored with embeddings and any query string, the Vector_Search results should be returned in non-increasing order of Relevance_Score.
+
+**Validates: Requirements 3.1**
+
+### Property 9: Search respects top_k and threshold
+
+*For any* query with a top_k parameter and a minimum threshold, the number of results should be at most top_k, and every returned entry should have a Relevance_Score greater than or equal to the threshold.
+
+**Validates: Requirements 3.2, 3.3**
+
+### Property 10: Search category filter
+
+*For any* query with a KnowledgeCategory filter, all returned MemoryEntry records should have a category matching the specified filter.
+
+**Validates: Requirements 3.4**
+
+### Property 11: Indexed entries have valid categories
+
+*For any* set of MemoryEntry records produced by the Indexer from a conversation, every entry should have a category that is a valid KnowledgeCategory enum value.
+
+**Validates: Requirements 4.2**
+
+### Property 12: Deduplication on re-index
+
+*For any* MemoryEntry already in the store, if the Indexer processes content that is semantically identical (similarity above the deduplication threshold), the total number of entries in the store should not increase.
+
+**Validates: Requirements 4.3**
+
+### Property 13: Memory context formatting and token budget
+
+*For any* set of MemoryEntry records with scores and any positive token budget, the formatted Memory_Context string should contain the content of the highest-scoring entries and should not exceed the token budget. Entries should appear in descending score order.
+
+**Validates: Requirements 5.2, 5.3**
+
+### Property 14: Serialization round trip
+
+*For any* valid MemoryEntry, serializing it to JSON and then deserializing the JSON back should produce an equivalent MemoryEntry with all fields preserved.
+
+**Validates: Requirements 6.3**
+
+### Property 15: Invalid config raises validation error
+
+*For any* CortexConfig with an invalid field value (negative embedding_dimensions, threshold outside 0.0–1.0, non-positive max_memory_context_tokens), constructing the config should raise a validation error.
+
+**Validates: Requirements 7.3**
+
+### Property 16: API pagination invariant
+
+*For any* set of stored MemoryEntry records and any page_size parameter, the number of entries returned in a single page should be at most page_size.
+
+**Validates: Requirements 8.1**
+
+## Error Handling
+
+| Scenario | Behavior |
+|----------|----------|
+| Embedding provider unavailable during store | Store entry with null embedding, log warning. Backfill embedding on next successful provider call. |
+| Embedding provider unavailable during search | Return empty results, log error. Do not crash the session. |
+| Duplicate entry ID on save | Raise `DuplicateEntryError` with the conflicting ID. |
+| Entry not found on get/delete | Raise `EntryNotFoundError` with the requested ID. |
+| Invalid config values | Raise `ValidationError` at startup with descriptive message. |
+| LLM extraction fails during indexing | Log warning, skip the failed segment, continue indexing remaining content. |
+| Unparseable content during indexing | Log warning, skip segment, do not fail the batch. |
+| FileStore I/O error | Propagate as `StorageError` with the underlying cause. |
+| Token budget exceeded during context formatting | Truncate by removing lowest-scoring entries until within budget. Never exceed budget. |
+
+## Testing Strategy
+
+### Property-Based Testing
+
+Use `hypothesis` (Python property-based testing library) for all correctness properties.
+
+Each property test should:
+- Run a minimum of 100 iterations
+- Be tagged with a comment referencing the design property: `# Feature: semantic-memory, Property N: <title>`
+- Use custom Hypothesis strategies to generate valid MemoryEntry instances, embedding vectors, and config values
+
+Key strategies to define:
+- `memory_entry_strategy()`: Generates valid MemoryEntry instances with random content, categories, metadata
+- `embedding_vector_strategy(dimensions)`: Generates normalized float vectors of the specified dimensionality
+- `cortex_config_strategy()`: Generates valid and invalid CortexConfig instances
+
+### Unit Testing
+
+Use `pytest` for unit tests covering:
+- Specific examples of store CRUD operations
+- Edge cases: empty store searches, zero top_k, threshold of 1.0
+- Error conditions: duplicate IDs, missing entries, provider failures
+- Configuration defaults and validation
+- API endpoint response formats and status codes
+- Integration between CortexRecall and the Memory class event system
+
+### Test Organization
+
+```
+tests/unit/test_cortex/
+├── test_memory_entry.py          # Property 14 (serialization round trip), unit tests for model
+├── test_memory_store.py          # Properties 1-4 (store CRUD), unit tests for store
+├── test_embedding_provider.py    # Properties 5-7 (embedding), unit tests for provider
+├── test_vector_search.py         # Properties 8-10 (search), unit tests for search
+├── test_cortex_indexer.py        # Properties 11-12 (indexing), unit tests for indexer
+├── test_cortex_recall.py         # Property 13 (context formatting), unit tests for recall
+├── test_cortex_config.py         # Property 15 (config validation), unit tests for config
+├── test_cortex_api.py            # Property 16 (pagination), unit tests for API
+└── conftest.py                   # Shared fixtures and Hypothesis strategies
+```
+
+### Mocking Strategy
+
+- Mock `EmbeddingProvider` in store and search tests to avoid external API calls
+- Mock `FileStore` in MemoryStore tests to test logic independently of I/O
+- Mock `LLM` in Indexer tests to control extraction output
+- Use real numpy operations for vector similarity tests (fast enough for unit tests)
