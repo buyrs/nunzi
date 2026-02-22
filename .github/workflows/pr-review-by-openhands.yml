@@ -49,13 +49,13 @@ jobs:
             REPO_NAME: ${{ github.repository }}
         steps:
             - name: Checkout software-agent-sdk repository
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   repository: OpenHands/software-agent-sdk
                   path: software-agent-sdk
 
             - name: Checkout PR repository
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   # When using pull_request_target, explicitly checkout the PR branch
                   # This ensures we review the actual PR code (including fork PRs)
